@@ -1,18 +1,18 @@
-#Routing Docs 💌
+# Routing Docs 💌
 
 
-##POST, GET METHOD
+## POST, GET METHOD
 localhost/post
 
-##POST, POST METHOD 
+## POST, POST METHOD 
 localhost/post
 Perlu Disertakan Headers dengan key X-Csrf-Token
 
-##POST, PUT METHOD
+## POST, PUT METHOD
 localhost/post/:id
 Perlu Disertakan Headers dengan key X-Csrf-Token
 
-##POST, DELETE METHOD 
+## POST, DELETE METHOD 
 localhost/post/:id
 Perlu Disertakan Headers dengan key X-Csrf-Token
 
