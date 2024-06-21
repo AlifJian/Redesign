@@ -3,11 +3,9 @@ package main
 import (
 	"backend/database"
 	"backend/routes"
-	"time"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/csrf"
-	"github.com/gofiber/fiber/v2/utils"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 )
 
 func main() {
@@ -17,16 +15,11 @@ func main() {
 	// App init
 	app := fiber.New()
 
-	// Use CSRF Middleware
-	csrfConfig := csrf.Config{
-		KeyLookup:      "header:X-Csrf-Token", // string in the form of '<source>:<key>' that is used to extract token from the request
-		CookieName:     "csrf_",               // name of the session cookie
-		CookieSameSite: "Strict",              // indicates if CSRF cookie is requested by SameSite
-		Expiration:     1 * time.Hour,         // expiration is the duration before CSRF token will expire
-		KeyGenerator:   utils.UUIDv4,          // creates a new CSRF token
-	}
-
-	app.Use(csrf.New(csrfConfig))
+	// Use CORS Middleware
+	app.Use(cors.New(cors.Config{
+		AllowOrigins: "http://127.0.0.1:8000",
+		AllowHeaders: "Origin, Content-Type, Accept",
+	}))
 
 	// Post Routing
 	routes.PostRoute(app, db)
