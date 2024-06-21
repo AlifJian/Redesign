@@ -3,14 +3,25 @@ package main
 import (
 	"backend/database"
 	"backend/routes"
+	"os"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/joho/godotenv"
 )
 
+func init() {
+	err := godotenv.Load()
+	if err != nil {
+		panic("Error Load .env File")
+	}
+
+}
 func main() {
+	//
+	port := os.Getenv("APP_PORT")
 	// Database Connect
-	db := database.Connect()
+	database.Connect()
 
 	// App init
 	app := fiber.New()
@@ -22,8 +33,8 @@ func main() {
 	}))
 
 	// Post Routing
-	routes.PostRoute(app, db)
+	routes.EventRoute(app)
 
 	// Go Fiber Listener
-	app.Listen(":8000")
+	app.Listen(":" + port)
 }
