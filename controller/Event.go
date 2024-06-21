@@ -3,7 +3,6 @@ package controller
 import (
 	"backend/database"
 	"backend/models"
-	"fmt"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -56,7 +55,6 @@ func Search(ctx *fiber.Ctx) error {
 
 	var events []models.Event
 	if err := database.DB.Where("LOWER(title) LIKE ?", "%"+title+"%").Find(&events).Error; err != nil {
-		fmt.Println(events)
 		return ctx.Status(fiber.StatusNotFound).JSON(models.Result{
 			Status:  404,
 			Message: "Event Not Found",
@@ -84,8 +82,6 @@ func Update(ctx *fiber.Ctx) error {
 		})
 	}
 
-	fmt.Println(event)
-
 	if row := database.DB.Where("id = ? ", id).Updates(&event).RowsAffected; row == 0 {
 		return ctx.Status(fiber.StatusInternalServerError).JSON(models.Result{
 			Status:  500,
@@ -93,8 +89,6 @@ func Update(ctx *fiber.Ctx) error {
 			Data:    []models.Event{},
 		})
 	}
-
-	fmt.Println(event)
 
 	return ctx.Status(fiber.StatusOK).JSON(models.Result{
 		Status:  200,
