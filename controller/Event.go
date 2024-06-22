@@ -15,12 +15,11 @@ func GetAll(ctx *fiber.Ctx) error {
 		panic(data.Error)
 	}
 
-	result := models.Result{
+	return ctx.Status(fiber.StatusOK).JSON(models.Result{
 		Status:  200,
 		Message: "OK",
 		Data:    events,
-	}
-	return ctx.Status(fiber.StatusOK).JSON(result)
+	})
 }
 
 func Create(ctx *fiber.Ctx) error {
